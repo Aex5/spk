@@ -1,5 +1,20 @@
-import '@/styles/globals.css'
+import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+import '../styles/globals.css';
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function MyApp({ Component, pageProps }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return (
+    <>
+      {isClient && <Toaster position="top-center" reverseOrder={false} />}
+      <Component {...pageProps} />
+    </>
+  );
 }
+
+export default MyApp;

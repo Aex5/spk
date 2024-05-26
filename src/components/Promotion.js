@@ -10,9 +10,9 @@ const ubuntu = Ubuntu({
 
 export default function Promotion() {
   return (
-    <main className="container mx-auto px-4 mt-20">
+    <main className="w-full mx-auto px-4 mt-20">
       <div>
-        <div className="mt-10 w-full bg-white shadow-xl rounded-xl">
+        <div className="mt-10 md:max-w-[1100px] mx-auto bg-white shadow-xl rounded-xl">
           <div className="p-2 flex items-center justify-between">
             <h4 className="text-md font-semibold text-slate-500">
               Lebih Lanjut

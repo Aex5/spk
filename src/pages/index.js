@@ -1,17 +1,16 @@
 import Layout from "@/components/Layout";
 import Banner from "@/components/Banner";
 import Promotion from "@/components/Promotion";
-import Card from "@/components/Card";
-import Category from "@/components/Category";
-import Navigation from "@/components/Navigation";
+import Search from "@/components/Search";
+import Trim from "@/components/Trim";
 
 export default function Home() {
   return (
     <Layout>
       <Banner />
-      <Card />
+      <Search />
+      <Trim />
       <Promotion />
-      <Navigation />
     </Layout>
   );
 }
