@@ -19,7 +19,7 @@ const items = [
 
 const Footer = () => {
   return (
-    <div className="w-full container mt-24 bg-gray-200 text-gray-300 pl-64 py-y px-2">
+    <div className="w-full mt-24 bg-gray-200 text-gray-300 pl-64 py-y px-2">
       <div className="flex justify-center gap-10 max-w-[1000px] border-gray-600 py-8">
           {sections.map((item, i) => (
             <ul>

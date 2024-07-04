@@ -3,6 +3,7 @@ import Banner from "@/components/Banner";
 import Promotion from "@/components/Promotion";
 import Search from "@/components/Search";
 import Trim from "@/components/Trim";
+import Card from "@/components/Card";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Banner />
       <Search />
       <Trim />
+      <Card/>
       <Promotion />
     </Layout>
   );

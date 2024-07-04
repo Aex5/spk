@@ -2,8 +2,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import Trim from "./Trim";
-
 import { FaStar } from "react-icons/fa";
 
 export default function Card() {
@@ -24,9 +22,12 @@ export default function Card() {
   }, []);
 
   return (
-    <main className={`container mx-auto p-4 my-6`}>
-      <Trim />
-      <div className="grid grid-cols-2 gap-4">
+    <main className={`w-full p-4 my-6`}>
+      <div className="max-w-[1100px] mx-auto grid grid-cols-2 gap-4">
+      <h2 className="font-semibold text-2xl text-slate-700 mb-10">
+        Yang lagi rame
+
+      </h2>
         {data.map((d, index) => {
           return (
             <Link
