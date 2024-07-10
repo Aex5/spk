@@ -12,8 +12,8 @@ const Stat = () => {
   if (!data) return <p>Loading...</p>;
 
   return (
-    <div className="max-w-full bg-gray-200 pl-64 ">
-      <div className="grid max-w-[800px] gap-4 lg:gap-8 md:grid-cols-3 p-8 pt-20">
+    <div className="bg-gray-200 pl-64 ">
+      <div className="grid gap-4 lg:gap-8 md:grid-cols-3 p-8 pt-20">
         <div className="relative p-6 rounded-2xl bg-white shadow">
           <div className="space-y-2">
             <div className="flex items-center space-x-2 text-sm font-medium text-gray-500">

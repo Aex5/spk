@@ -25,7 +25,7 @@ export default function Card() {
     <main className={`w-full p-4 my-6`}>
       <div className="max-w-[1100px] mx-auto grid grid-cols-2 gap-4">
       <h2 className="font-semibold text-2xl text-slate-700 mb-10">
-        Yang lagi rame
+        Yang lagi viral
 
       </h2>
         {data.map((d, index) => {

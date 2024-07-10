@@ -20,7 +20,7 @@ const items = [
 const Footer = () => {
   return (
     <div className="w-full mt-24 bg-gray-200 text-gray-300 pl-64 py-y px-2">
-      <div className="flex justify-center gap-10 max-w-[1000px] border-gray-600 py-8">
+      <div className="flex justify-center gap-10 border-gray-600 py-8">
           {sections.map((item, i) => (
             <ul>
               <li key={i} className="py-1 text-gray-500 hover:text-white">
@@ -29,7 +29,7 @@ const Footer = () => {
             </ul>
           ))}
         </div>
-      <div className="flex flex-col max-w-[1000px]  py-4 justify-between text-center text-gray-500">
+      <div className="flex flex-col py-4 justify-between text-center text-gray-500">
         <div className="ml-auto flex text-xl gap-5">
           {items.map((x, index) => {
             return <x.icon key={index} className="hover:text-white" />;

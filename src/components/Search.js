@@ -59,7 +59,7 @@ function Search() {
       rating: ratingValue,
     };
 
-    const predictReq = await fetch("http://localhost:3001/api/predict", {
+    const predictReq = await fetch("http://localhost:3001/api/predict2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestData),
@@ -74,7 +74,6 @@ function Search() {
     if (predictRes.status === "success") {
       toast.success("Prediction successful!");
       router.push("/places/result");
-
     } else {
       toast.error(`${predictRes.message}`);
     }
