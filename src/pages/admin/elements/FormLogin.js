@@ -3,44 +3,47 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 function FormLogin() {
-    const router = useRouter();
+  const router = useRouter();
 
-    const [data, setData] = useState({
-        email: "",
-        password: ""
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  async function submitHandler(e) {
+    e.preventDefault();
+
+    const loginReq = await fetch("http://localhost:3001/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
 
-    async function submitHandler (e){
-        e.preventDefault();
-
-        const loginReq = await fetch("http://localhost:3001/api/login" ,{
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data),
-            });
-        
-        const loginRes = await loginReq.json();
-        if (loginRes.status === "success") {
-            toast.success('Login successful!');
-            router.push('/admin/dashboard');
-        } else {
-            toast.error(`${loginRes.message}`);
-        }
+    const loginRes = await loginReq.json();
+    if (loginRes.status === "success") {
+      toast.success("Login successful!");
+      router.push("/admin/dashboard");
+    } else {
+      toast.error(`${loginRes.message}`);
     }
+  }
 
-    function formHandler(e) {
-        e.preventDefault();
+  function formHandler(e) {
+    e.preventDefault();
 
-        const value = e.target.value;
-        const name = e.target.name;
-    
-        setData({ ...data, [name]: value });
-    }
+    const value = e.target.value;
+    const name = e.target.name;
 
-    return (
+    setData({ ...data, [name]: value });
+  }
+
+  return (
     <div className="font-[sans-serif] text-[#333]">
       <div className="min-h-screen flex items-center justify-center py-6 px-4">
-        <form onSubmit={submitHandler} className="space-y-6 max-w-md max-md:mx-auto w-full">
+        <form
+          onSubmit={submitHandler}
+          className="space-y-6 max-w-md max-md:mx-auto w-full"
+        >
           <h3 className="text-3xl font-extrabold mb-8 max-md:text-center">
             Sign in
           </h3>

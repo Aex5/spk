@@ -16,6 +16,13 @@ export async function getServerSideProps() {
   }
 }
 
+const truncateText = (text, limit) => {
+  if (text.length > limit) {
+    return text.substring(0, limit) + "...";
+  }
+  return text;
+};
+
 export default function Page({ result }) {
   if (!result) {
     return <div>Error fetching data</div>; // Menampilkan pesan kesalahan jika data tidak tersedia
@@ -28,35 +35,50 @@ export default function Page({ result }) {
           <h1 className="font-bold text-4xl text-slate-700 mb-10">
             Daftar Wisata
           </h1>
-          <p className="text-lg text-slate-500">
+          <p className="text-lg text-slate-500 mb-10">
             Temukan destinasi wisata terbaik yang memukau mata dan jiwa. Dari
             keajaiban alam hingga keunikan budaya, setiap tempat menjanjikan
             pengalaman tak terlupakan. Mulailah petualangan Anda dan temukan
             destinasi impian di sini!
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 w-full mt-16">
-            {result.data.map((dest) => {
-              return (
-                <div key={dest.id}>
-                  <div className="h-44 md:h-48 w-full relative">
-                    <Image
-                      src={dest.image}
-                      alt={`${dest.destination_name}`}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="rounded-xl"
-                    />
-                  </div>
-                  <div className="flex justify-between items-center">
-                  <h1 className="font-semibold text-lg text-slate-700 mb-2">
-                    {dest.destination_name}
-                  </h1>
-                  <p className="pr-2">{dest.rating}</p>
-                  </div>
-                  <p>Rp. {dest.harga_tiket}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mt-20">
+            {result.data.map((dest, index) => (
+              <div
+                key={index}
+                className="bg-white overflow-hidden relative sm:rounded-lg mb-4"
+              >
+                <div className="h-64 w-full relative">
+                  <Image
+                    src={dest.image}
+                    alt={`${dest.destinationName}`}
+                    className="rounded-3xl object-cover"
+                    layout="fill"
+                    objectFit="cover"
+                  />
                 </div>
-              );
-            })}
+
+                <div className="bg-white border-2 rounded-3xl p-6 -translate-y-12">
+                  <div className="flex justify-between mb-6">
+                    <h2 className="font-bold text-xl text-slate-700">
+                      {dest.destination_name}
+                    </h2>
+                    <div>
+                      <p>{dest.rating} ⭐️ (review)</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-md text-slate-500 mb-6">
+                      {truncateText(dest.description, 150)}
+                    </p>
+                  </div>
+                  <hr />
+                  <p>{dest.score}</p>
+                  <button className="text-[#0E8388] bg-[#CBE4DE] p-2 rounded-lg mt-4">
+                    <p>Lihat Selengkapnya</p>
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

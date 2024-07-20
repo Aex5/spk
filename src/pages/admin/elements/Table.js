@@ -10,7 +10,7 @@ const Table = () => {
   if (error) return <p>Error: {error.message}</p>;
   if (!data) return <p>Loading...</p>;
 
-  console.log(data.data)
+
  return (
     <div className="pl-64 ">
       <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
