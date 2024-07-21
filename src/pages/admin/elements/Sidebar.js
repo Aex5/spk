@@ -158,8 +158,8 @@ function Sidebar() {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/admin/user"
                   className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
                 >
                   <span className="inline-flex justify-center items-center ml-4">
@@ -178,11 +178,11 @@ function Sidebar() {
                       ></path>
                     </svg>
                   </span>
-                  <span className="ml-2 text-sm tracking-wide truncate">Clients</span>
+                  <span className="ml-2 text-sm tracking-wide truncate">Users</span>
                   <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
                     15
                   </span>
-                </a>
+                </Link>
               </li>
               <li className="px-5">
                 <div className="flex flex-row items-center h-8">

@@ -46,7 +46,9 @@ function Event({ events }) {
   return (
     <Layout>
       <div className="pl-64">
-        <h1>Tambah Event</h1>
+        <h1 className="text-center font-bold text-4xl text-slate-700 mb-10 pt-10">
+          Tambah Event
+        </h1>
         <div className="flex items-center justify-center p-12">
           <div className="mx-auto w-full bg-white">
             <form onSubmit={submitHandler}>

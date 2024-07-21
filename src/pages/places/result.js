@@ -275,7 +275,7 @@ function Results() {
                           <td className="px-3 py-2 text-md text-slate-500">
                             :
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
+                          <td className="px-1 py-2 text-md text-slate-500">
                             <p>Rp. {n.harga_tiket}</p>
                           </td>
                         </tr>
@@ -286,7 +286,7 @@ function Results() {
                           <td className="px-3 py-2 text-md text-slate-500">
                             :
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
+                          <td className="px-1 py-2 text-md text-slate-500">
                             <p>{n.jumlah_pengunjung}</p>
                           </td>
                         </tr>
@@ -297,7 +297,7 @@ function Results() {
                           <td className="px-3 py-2 text-md text-slate-500">
                             :
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
+                          <td className="px-1 py-2 text-md text-slate-500">
                             <p>{nomineeDistance}</p>
                           </td>
                         </tr>
@@ -308,7 +308,7 @@ function Results() {
                           <td className="px-3 py-2 text-md text-slate-500">
                             :
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
+                          <td className="px-1 py-2 text-md text-slate-500">
                             <p>{nomineeDuration}</p>
                           </td>
                         </tr>

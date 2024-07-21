@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Layout from "@/components/Layout";
 import {
   APIProvider,
   Map,
@@ -48,7 +49,8 @@ function PlaceDetail() {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <Layout>
+    <div className="container mx-auto p-6 pt-32">
       {place.data.map((p) => {
         return (
           <div key={p.destination_name}>
@@ -91,6 +93,7 @@ function PlaceDetail() {
         </APIProvider>
       </div>
     </div>
+    </Layout>
   );
 }
 

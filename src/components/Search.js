@@ -30,7 +30,7 @@ function Search() {
             // Fetch place name from Google Places API
             const placeName = await getPlaceName(position.coords.latitude, position.coords.longitude);
 
-            const parts = placeName.split(', ')
+            const parts = placeName.split(',')
             parts.shift();
 
             setPlaceName(parts);
@@ -138,7 +138,7 @@ function Search() {
               value={data.userLongLat}
               placeholder="Lokasi mu (hidden)"
               type="text"
-              className="bg-slate-100 py-2 px-3 w-72 text-sm rounded-lg hidden"
+              className="bg-slate-100 py-2 px-3 text-sm rounded-lg hidden"
               readOnly
               name="userLongLat"
             />
@@ -156,7 +156,7 @@ function Search() {
               placeholder="Rating"
               type="number"
               step="0.1"
-              className="bg-slate-100 py-2 px-3 text-sm w-72 rounded-lg"
+              className="bg-slate-100 py-2 px-3 text-sm  rounded-lg"
               name="rating"
               onChange={formHandler}
             />
@@ -164,7 +164,7 @@ function Search() {
               type="submit"
               className="flex items-center text-[#0E8388] bg-[#CBE4DE] p-2 rounded-lg"
             >
-              <span className="mr-2">Generate</span>
+              <span className="mr-2">Prediksi</span>
               <FaWandMagicSparkles />
             </button>
           </form>
