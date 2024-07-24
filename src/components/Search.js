@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { split } from "postcss/lib/list";
+import Quiz from "./Quiz";
+
 
 function Search() {
   const router = useRouter();
@@ -99,9 +101,8 @@ function Search() {
 
   return (
     <section className="w-full text-slate-500">
-      <div className="md:max-w-[1150px] h-[200px] mx-auto rounded-2xl bg-white shadow-lg -translate-y-24">
-        <p className="text-sm px-5 py-3">KuduSeru</p>
-        <form action="" onSubmit={generatePredict} className="px-5 flex justify-between">
+      <div className="md:max-w-[1150px] mx-auto rounded-2xl bg-white shadow-lg -translate-y-24">
+        {/* <form action="" onSubmit={generatePredict} className="px-5 flex justify-between">
           <div className="flex items-center gap-2">
             <input
               placeholder="Dari"
@@ -123,10 +124,11 @@ function Search() {
               placeholder="Tanggal mulai"
             />
           </div>
-        </form>
+        </form> */}
+        <Quiz />
         <div className="px-5">
-          <p className="text-sm py-3">Rekomendasi Wisata :</p>
-          <form onSubmit={generatePredict} className="flex gap-2">
+          {/* <p className="text-sm py-3">Rekomendasi Wisata :</p> */}
+          {/* <form onSubmit={generatePredict} className="flex gap-2">
             <input
               value={placeName}
               placeholder="Nama tempat"
@@ -138,7 +140,7 @@ function Search() {
               value={data.userLongLat}
               placeholder="Lokasi mu (hidden)"
               type="text"
-              className="bg-slate-100 py-2 px-3 text-sm rounded-lg hidden"
+              className="bg-slate-100 py-2 px-3 text-sm rounded-lg "
               readOnly
               name="userLongLat"
             />
@@ -167,7 +169,7 @@ function Search() {
               <span className="mr-2">Prediksi</span>
               <FaWandMagicSparkles />
             </button>
-          </form>
+          </form> */}
         </div>
       </div>
     </section>

@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch("http://localhost:3001/api/destinations");
+    const res = await fetch("http://localhost:3001/api/events");
     if (!res.ok) {
       throw new Error("Failed to fetch");
     }
@@ -31,22 +31,17 @@ export default function Page({ result }) {
     <Layout>
       <section className="w-full pt-28">
         <div className="pb-10 md:max-w-[1100px] mx-auto">
-          <h1 className="font-bold text-4xl text-slate-700 mb-10">
-            Daftar Wisata
-          </h1>
+          <h1 className="font-bold text-4xl text-slate-700 mb-10">Event</h1>
           <p className="text-lg text-slate-500 mb-10">
-            Temukan destinasi wisata terbaik yang memukau mata dan jiwa. Dari
-            keajaiban alam hingga keunikan budaya, setiap tempat menjanjikan
-            pengalaman tak terlupakan. Mulailah petualangan Anda dan temukan
-            destinasi impian di sini!
+            Temukan event yang sedang berlangsung dan coba ikuti keseruannya
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mt-20">
-            {result.data.map((dest, index) => (
+            {result.data.map((e, index) => (
               <div
                 key={index}
                 className="bg-white overflow-hidden relative sm:rounded-lg mb-4"
               >
-                <div className="h-64 w-full relative">
+                {/* <div className="h-64 w-full relative">
                   <Image
                     src={dest.image}
                     alt={`${dest.destinationName}`}
@@ -54,24 +49,24 @@ export default function Page({ result }) {
                     layout="fill"
                     objectFit="cover"
                   />
-                </div>
+                </div> */}
 
-                <div className="bg-white border-2 rounded-3xl p-6 -translate-y-12">
+                <div className="bg-white border-2 rounded-3xl p-6">
                   <div className="flex justify-between mb-6">
                     <h2 className="font-bold text-xl text-slate-700">
-                      {dest.destination_name}
+                      {e.event_name}
                     </h2>
                     <div>
-                      <p>{dest.rating} ⭐️ (review)</p>
+                      <p>{e.event_data} ⭐️ (review)</p>
                     </div>
                   </div>
                   <div>
                     <p className="text-md text-slate-500 mb-6">
-                      {truncateText(dest.description, 150)}
+                      {e.event_description}
                     </p>
                   </div>
                   <hr />
-                  <p>{dest.score}</p>
+                  <p>{e.destinatioin_id}</p>
                   <button className="text-[#0E8388] bg-[#CBE4DE] p-2 rounded-lg mt-4">
                     <p>Lihat Selengkapnya</p>
                   </button>

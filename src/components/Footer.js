@@ -9,20 +9,20 @@ import {
 
 const sections = [
   {
-    title: "Solutions",
-    items: ["Marketing", "Analytics", "Commerce", "Data", "Cloud"],
+    title: "Home",
+    items: [""],
   },
   {
-    title: "Support",
-    items: ["Pricing", "Documentation", "Guides", "API Status"],
+    title: "Destination",
+    items: [""],
   },
   {
-    title: "Company",
-    items: ["About", "Blog", "Jobs", "Press", "Partners"],
+    title: "Events",
+    items: [""],
   },
   {
     title: "Legal",
-    items: ["Claims", "Privacy", "Terms", "Policies", "Conditions"],
+    items: [""],
   },
 ];
 
@@ -40,7 +40,7 @@ const Footer = () => {
       <div className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-6 border-b-2 border-gray-600 py-8">
         {sections.map((section, index) => (
           <div key={index}>
-            <h6 className="font-bold uppercase pt-2">{section.title}</h6>
+            <h6 className="font-semibold uppercase pt-2">{section.title}</h6>
             <ul>
               {section.items.map((item, i) => (
                 <li key={i} className="py-1 text-gray-500 hover:text-white">

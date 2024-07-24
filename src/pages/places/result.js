@@ -6,7 +6,6 @@ import Layout from "@/components/Layout";
 function Results() {
   const [results, setResults] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
-  const [directions, setDirections] = useState(null);
   const [nomineeDirections, setNomineeDirections] = useState({});
 
   useEffect(() => {
@@ -33,15 +32,7 @@ function Results() {
   }, []);
 
   useEffect(() => {
-    if (userLocation && results?.topDestination) {
-      const { longlat } = results.topDestination;
-      const [lat, lng] = longlat.split(",").map(Number);
-      fetchDirections(userLocation, { lat, lng }).then((directions) => {
-        setDirections(directions);
-      });
-    }
-
-    if (userLocation && results?.nomineeDestinations) {
+    if (userLocation && results) {
       const nomineeDirectionsPromises = results.nomineeDestinations.map((n) => {
         const [lat, lng] = n.longlat.split(",").map(Number);
         return fetchDirections(userLocation, { lat, lng }).then(
@@ -76,41 +67,28 @@ function Results() {
     return null;
   };
 
-  const truncateText = (text, limit) => {
-    if (text.length > limit) {
-      return text.substring(0, limit) + "...";
-    }
-    return text;
-  };
-
-  if (!results || !userLocation || !directions) {
+  if (!results || !userLocation) {
     return <p className="text-center text-gray-500">Loading...</p>;
   }
 
-  const { nomineeDestinations, topDestination, weights, percentages } = results;
-
-  if (!topDestination) {
-    return (
-      <p className="text-center text-red-500">
-        Error: Destination info not available.
-      </p>
-    );
-  }
-
-  const { distance, duration } = directions;
+  // Extract the first nominee as the main recommendation
+  const firstNominee = results.nomineeDestinations[0];
+  const otherNominees = results.nomineeDestinations.slice(1);
 
   return (
     <Layout>
       <div className="container mx-auto p-6 pt-32">
-        <div>
-          <h1 className="text-center font-bold text-4xl text-slate-700 mb-10">
-            Hasil Prediksi
-          </h1>
-          <div className="bg-white overflow-hidden relative sm:rounded-lg mb-4">
+        <h1 className="text-center font-bold text-4xl text-slate-700 mb-10">
+          Hasil Prediksi
+        </h1>
+
+        {/* Main Recommendation */}
+        {firstNominee && (
+          <div className="bg-white overflow-hidden relative sm:rounded-lg mb-10">
             <div className="h-96 w-full relative">
               <Image
-                src={topDestination.image}
-                alt={topDestination.destination_name}
+                src={firstNominee.image}
+                alt={firstNominee.destination_name}
                 className="rounded-3xl object-cover"
                 layout="fill"
                 objectFit="cover"
@@ -120,26 +98,30 @@ function Results() {
             <div className="bg-white border-2 rounded-3xl p-10 -translate-y-20">
               <div className="flex justify-between mb-10">
                 <h1 className="font-bold text-3xl text-slate-700 mb-10">
-                  {topDestination.destination_name}
+                  {firstNominee.destination_name}
                 </h1>
                 <div>
-                  <p>{topDestination.rating} ⭐️ (review)</p>
+                  <p>{firstNominee.rating} ⭐️ (review)</p>
                 </div>
               </div>
               <div>
                 <p className="text-lg text-slate-500 mb-10">
-                  {topDestination.description}
+                  {firstNominee.description}
                 </p>
               </div>
               <hr />
               <div className="flex justify-between items-center">
                 <div className="border-2 rounded-2xl p-2">
                   <table>
-                    <th colSpan={3}>
-                      <h1 className="font-bold text-xl text-slate-700 mb-5">
-                        Detail Data
-                      </h1>
-                    </th>
+                    <thead>
+                      <tr>
+                        <th colSpan={3}>
+                          <h1 className="font-bold text-xl text-slate-700 mb-5">
+                            Detail Data
+                          </h1>
+                        </th>
+                      </tr>
+                    </thead>
                     <tbody className="divide-y divide-gray-200">
                       <tr>
                         <td className="px-3 py-2 text-md text-slate-500">
@@ -147,7 +129,7 @@ function Results() {
                         </td>
                         <td className="px-3 py-2 text-md text-slate-500">:</td>
                         <td className="px-3 py-2 text-md text-slate-500">
-                          <p>Rp. {topDestination.harga_tiket}</p>
+                          <p>Rp. {firstNominee.harga_tiket}</p>
                         </td>
                       </tr>
                       <tr>
@@ -156,7 +138,7 @@ function Results() {
                         </td>
                         <td className="px-3 py-2 text-md text-slate-500">:</td>
                         <td className="px-3 py-2 text-md text-slate-500">
-                          <p>{topDestination.jumlah_pengunjung}</p>
+                          <p>{firstNominee.jumlah_pengunjung}</p>
                         </td>
                       </tr>
                       <tr>
@@ -165,7 +147,12 @@ function Results() {
                         </td>
                         <td className="px-3 py-2 text-md text-slate-500">:</td>
                         <td className="px-3 py-2 text-md text-slate-500">
-                          <p>{distance.text}</p>
+                          <p>
+                            {
+                              nomineeDirections[firstNominee.id]?.distance.text ||
+                              "Loading..."
+                            }
+                          </p>
                         </td>
                       </tr>
                       <tr>
@@ -174,59 +161,34 @@ function Results() {
                         </td>
                         <td className="px-3 py-2 text-md text-slate-500">:</td>
                         <td className="px-3 py-2 text-md text-slate-500">
-                          <p>{duration.text}</p>
+                          <p>
+                            {
+                              nomineeDirections[firstNominee.id]?.duration.text ||
+                              "Loading..."
+                            }
+                          </p>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-
-                <table className="divide-y divide-gray-200 mb-6 mt-10">
-                  <thead>
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Kriteria
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Bobot
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Persentase
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {weights.map((w, index) => (
-                      <tr key={index}>
-                        <td className="px-6 py-4 text-lg text-slate-500">
-                          {w.name}
-                        </td>
-                        <td className="px-6 py-4 text-lg text-slate-500">
-                          {w.weight.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 text-lg text-slate-500">
-                          {percentages[index].percentage.toFixed(2)}%
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <Link href={`/places/${firstNominee.id}`}>
+                  <p className="text-[#0E8388] text-center bg-[#CBE4DE] p-3 rounded-lg">
+                    Lihat Selengkapnya
+                  </p>
+                </Link>
               </div>
-              <Link href={`../places/${topDestination.id}`}>
-                <p className="text-[#0E8388] text-center bg-[#CBE4DE] p-3 rounded-lg">
-                  Lihat Selengkapnya
-                </p>
-              </Link>
             </div>
           </div>
-        </div>
+        )}
 
-        <h1 className="text-center font-bold text-4xl text-slate-700 mb-10">
+        {/* List of Nominee Destinations */}
+        <h2 className="text-center font-bold text-3xl text-slate-700 mb-8">
           Data Komparisasi
-        </h1>
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {nomineeDestinations.map((n, index) => {
+          {[firstNominee, ...otherNominees].map((n, index) => {
             const nomineeDirection = nomineeDirections[n.id];
             const nomineeDistance = nomineeDirection
               ? nomineeDirection.distance.text
@@ -261,7 +223,7 @@ function Results() {
                   </div>
                   <div>
                     <p className="text-md text-slate-500 mb-6">
-                      {truncateText(n.description, 150)}
+                      {n.description}
                     </p>
                   </div>
 
@@ -272,20 +234,16 @@ function Results() {
                           <td className="px-3 py-2 text-md text-slate-500">
                             Harga Masuk
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            :
-                          </td>
+                          <td className="px-3 py-2 text-md text-slate-500">:</td>
                           <td className="px-1 py-2 text-md text-slate-500">
                             <p>Rp. {n.harga_tiket}</p>
                           </td>
                         </tr>
                         <tr>
                           <td className="px-3 py-2 text-md text-slate-500">
-                            pengunjung harian
+                            Jumlah pengunjung harian
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            :
-                          </td>
+                          <td className="px-3 py-2 text-md text-slate-500">:</td>
                           <td className="px-1 py-2 text-md text-slate-500">
                             <p>{n.jumlah_pengunjung}</p>
                           </td>
@@ -294,9 +252,7 @@ function Results() {
                           <td className="px-3 py-2 text-md text-slate-500">
                             Jarak
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            :
-                          </td>
+                          <td className="px-3 py-2 text-md text-slate-500">:</td>
                           <td className="px-1 py-2 text-md text-slate-500">
                             <p>{nomineeDistance}</p>
                           </td>
@@ -305,9 +261,7 @@ function Results() {
                           <td className="px-3 py-2 text-md text-slate-500">
                             Waktu tempuh
                           </td>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            :
-                          </td>
+                          <td className="px-3 py-2 text-md text-slate-500">:</td>
                           <td className="px-1 py-2 text-md text-slate-500">
                             <p>{nomineeDuration}</p>
                           </td>
@@ -316,7 +270,7 @@ function Results() {
                     </table>
                   </div>
                   <Link href={`/places/${n.id}`}>
-                    <p className="text-[#0E8388] text-center bg-[#CBE4DE] p-2 rounded-lg mt-4">
+                    <p className="text-[#0E8388] text-center bg-[#CBE4DE] p-3 rounded-lg mt-4">
                       Lihat Selengkapnya
                     </p>
                   </Link>
