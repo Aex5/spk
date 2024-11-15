@@ -24,7 +24,7 @@ function FormLogin() {
     if (loginRes.status === "success") {
       sessionStorage.setItem("user", JSON.stringify(loginRes.data));
       toast.success("Login successful!");
-      router.push("/");
+      router.back();
     } else {
       toast.error(`${loginRes.message}`);
     }

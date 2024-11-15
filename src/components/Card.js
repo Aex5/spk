@@ -16,7 +16,7 @@ export default function Card() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/destination/top"
+          "http://localhost:3001/api/destination/top",
         );
         setData(response.data.data);
       } catch (error) {
@@ -102,9 +102,12 @@ export default function Card() {
                   </p>
                 </div>
 
-                <button className="bg-slate-600 text-slate-100 py-3 px-4">
+                <Link
+                  href={`/places/${dest.id}`}
+                  className="bg-slate-600 text-slate-100 py-3 px-4"
+                >
                   Lebih lanjut
-                </button>
+                </Link>
               </div>
             </div>
           ))}

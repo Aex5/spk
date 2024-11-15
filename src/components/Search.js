@@ -51,7 +51,7 @@ function Search() {
 
   // Function to get place name from latitude and longitude
   const getPlaceName = async (lat, lng) => {
-    const apiKey = "AIzaSyChcunyAdoFI8NlpxlmtPMOyRNI6qfYyVE"; // Replace with your API key
+    const apiKey = "AIzaSyAiqiK8tuWVTiNWNUvUO8WyxtYC3h8uaRg"; // Replace with your API key
     const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`);
     const data = await response.json();
     if (data.results.length > 0) {

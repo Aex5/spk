@@ -12,7 +12,7 @@ export default function User() {
   return (
     <Layout>
       <div className="pl-64">
-        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8 pb-96">
           <h1 className="text-center font-bold text-4xl text-slate-700 mb-10 pt-10">
             User
           </h1>

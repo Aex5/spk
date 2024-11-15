@@ -1,10 +1,16 @@
-// pages/event.js
-import Layout from "./elements/Layout";
+import Layout from "../elements/Layout";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import Link from "next/link";
+import { MdDelete } from "react-icons/md";
 
-function Event({ events }) {
+function Event({ events, destinations }) {
+  const destinationOptions = destinations.data.map((d) => ({
+    id: d.id,
+    name: d.destination_name,
+  }));
+
   const [data, setData] = useState({
     event_name: "",
     event_description: "",
@@ -15,14 +21,14 @@ function Event({ events }) {
   async function submitHandler(e) {
     e.preventDefault();
 
-    const loginReq = await fetch("http://localhost:3001/api/event/create", {
+    const createEvent = await fetch("http://localhost:3001/api/event/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
-    const loginRes = await loginReq.json();
-    if (loginRes.status === "success") {
+    const createRes = await createEvent.json();
+    if (createRes.status === "success") {
       toast.success("Create successful!");
       // Reset form fields to initial state
       setData({
@@ -32,7 +38,7 @@ function Event({ events }) {
         destination_id: "",
       });
     } else {
-      toast.error(`${loginRes.message}`);
+      toast.error(`${createRes.message}`);
     }
   }
 
@@ -41,6 +47,34 @@ function Event({ events }) {
     const name = e.target.name;
 
     setData({ ...data, [name]: value });
+  }
+
+  function handleDestinationChange(e) {
+    const selectedDestination = destinationOptions.find(
+      (d) => d.name === e.target.value,
+    );
+    setData({ ...data, destination_id: selectedDestination.id });
+  }
+
+  async function deleteOnClick(event_id) {
+    console.log(event_id);
+    if (event_id) {
+      const deleteReq = await fetch(
+        `http://localhost:3001/api/event/delete/${event_id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        },
+      );
+
+      const deleteRes = await deleteReq.json();
+      if (deleteRes.status === "success") {
+        toast.success("Delete successful!");
+      } else {
+        toast.error(`${deleteRes.message}`);
+      }
+    }
   }
 
   return (
@@ -75,15 +109,21 @@ function Event({ events }) {
                 />
               </div>
               <div className="mb-5">
-                <input
-                  type="text"
-                  onChange={formHandler}
+                <select
+                  onChange={handleDestinationChange}
                   name="destination_id"
                   id="destinasi"
-                  placeholder="Destinasi"
-                  value={data.destination_id}
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
+                >
+                  <option value="" disabled selected>
+                    Pilih Destinasi
+                  </option>
+                  {destinationOptions.map((d) => (
+                    <option key={d.id} value={d.name}>
+                      {d.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="-mx-3 flex flex-wrap">
                 <div className="w-full px-3 sm:w-1/2">
@@ -120,20 +160,34 @@ function Event({ events }) {
             {events.data.map((e, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-lg mb-6"
+                className="bg-white p-6 rounded-lg border-2 mb-6"
               >
-                <p className="text-lg font-semibold text-gray-800 mb-2">
-                  {e.event_name}
-                </p>
+                <Link href={`/admin/event/${e.event_id}`}>
+                  <p className="text-lg font-semibold text-gray-800 mb-2">
+                    {e.event_name}
+                  </p>
+                </Link>
                 <p className="text-base text-gray-700 mb-2">
                   {e.event_description}
                 </p>
                 <p className="text-sm text-gray-600 mb-2">
-                  Tanggal: {e.event_date}
+                  Tanggal:{" "}
+                  {new Date(e.event_date).toLocaleDateString("id-ID", {
+                    weekday: "short",
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Destinasi: {e.destination_id}
+                  Destinasi: {e.destination_name}
                 </p>
+                <button
+                  onClick={() => deleteOnClick(e.event_id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded mt-10"
+                >
+                  <MdDelete />
+                </button>
               </div>
             ))}
           </div>
@@ -144,12 +198,25 @@ function Event({ events }) {
 }
 
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await axios.get("http://localhost:3001/api/events");
-  const events = res.data;
+  try {
+    // Fetch events data
+    const eventsRes = await axios.get("http://localhost:3001/api/events");
+    const events = eventsRes.data;
 
-  // Pass data to the page via props
-  return { props: { events } };
+    // Fetch destinations data
+    const destinationsRes = await fetch(
+      "http://localhost:3001/api/destinations",
+    );
+    if (!destinationsRes.ok) {
+      throw new Error("Failed to fetch");
+    }
+    const destinations = await destinationsRes.json();
+
+    // Pass data to the page via props
+    return { props: { events, destinations } };
+  } catch (error) {
+    return { props: { events: null, destinations: null } }; // Mengembalikan null jika terjadi kesalahan
+  }
 }
 
 export default Event;

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Layout from "@/components/Layout";
+import Link from "next/link";
 
 export async function getServerSideProps() {
   try {
@@ -61,9 +62,9 @@ export default function Page({ result }) {
                     <h2 className="font-bold text-xl text-slate-700">
                       {dest.destination_name}
                     </h2>
-                    <div>
-                      <p>{dest.rating} ⭐️ (review)</p>
-                    </div>
+                    {/* <div> */}
+                    {/*   <p>{dest.rating} ⭐️ (review)</p> */}
+                    {/* </div> */}
                   </div>
                   <div>
                     <p className="text-md text-slate-500 mb-6">
@@ -72,9 +73,11 @@ export default function Page({ result }) {
                   </div>
                   <hr />
                   <p>{dest.score}</p>
-                  <button className="text-[#0E8388] bg-[#CBE4DE] p-2 rounded-lg mt-4">
-                    <p>Lihat Selengkapnya</p>
-                  </button>
+                  <Link href={`/places/${dest.id}`}>
+                    <p className="text-white text-center bg-slate-600 p-3 rounded-lg">
+                      Lihat Selengkapnya
+                    </p>
+                  </Link>
                 </div>
               </div>
             ))}

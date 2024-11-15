@@ -50,21 +50,6 @@ const Footer = () => {
             </ul>
           </div>
         ))}
-
-        <div className="col-span-2 pt-8 md:pt-2">
-          <p className="font-bold uppercase">Subscribe to our newsletter</p>
-          <p className="py-4">
-            The latest news, articles, and resources, sent to your inbox weekly.
-          </p>
-          <form className="flex flex-col sm:flex-row">
-            <input
-              className="w-full p-2 mr-4 rounded-md mb-4"
-              type="email"
-              placeholder="Enter email.."
-            />
-            <button className="p-2 mb-4">Subscribe</button>
-          </form>
-        </div>
       </div>
 
       <div className="flex flex-col max-w-[1100px] px-2 py-4 mx-auto justify-between sm:flex-row text-center text-gray-500">

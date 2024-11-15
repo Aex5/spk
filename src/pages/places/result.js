@@ -5,8 +5,6 @@ import Layout from "@/components/Layout";
 
 function Results() {
   const [results, setResults] = useState(null);
-  const [userLocation, setUserLocation] = useState(null);
-  const [nomineeDirections, setNomineeDirections] = useState({});
 
   useEffect(() => {
     // Ambil data dari localStorage
@@ -14,60 +12,9 @@ function Results() {
     if (storedResults) {
       setResults(JSON.parse(storedResults));
     }
-
-    // Ambil lokasi pengguna saat ini
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error("Error getting user location:", error);
-        }
-      );
-    }
   }, []);
 
-  useEffect(() => {
-    if (userLocation && results) {
-      const nomineeDirectionsPromises = results.nomineeDestinations.map((n) => {
-        const [lat, lng] = n.longlat.split(",").map(Number);
-        return fetchDirections(userLocation, { lat, lng }).then(
-          (directions) => ({
-            id: n.id,
-            directions,
-          })
-        );
-      });
-
-      Promise.all(nomineeDirectionsPromises).then((directionsArray) => {
-        const directionsMap = directionsArray.reduce(
-          (acc, { id, directions }) => {
-            acc[id] = directions;
-            return acc;
-          },
-          {}
-        );
-        setNomineeDirections(directionsMap);
-      });
-    }
-  }, [userLocation, results]);
-
-  const fetchDirections = async (origin, destination) => {
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&key=AIzaSyChcunyAdoFI8NlpxlmtPMOyRNI6qfYyVE`
-    );
-    const data = await response.json();
-    if (data.routes.length > 0) {
-      return data.routes[0].legs[0];
-    }
-    return null;
-  };
-
-  if (!results || !userLocation) {
+  if (!results) {
     return <p className="text-center text-gray-500">Loading...</p>;
   }
 
@@ -141,39 +88,11 @@ function Results() {
                           <p>{firstNominee.jumlah_pengunjung}</p>
                         </td>
                       </tr>
-                      <tr>
-                        <td className="px-3 py-2 text-md text-slate-500">
-                          Jarak
-                        </td>
-                        <td className="px-3 py-2 text-md text-slate-500">:</td>
-                        <td className="px-3 py-2 text-md text-slate-500">
-                          <p>
-                            {
-                              nomineeDirections[firstNominee.id]?.distance.text ||
-                              "Loading..."
-                            }
-                          </p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 text-md text-slate-500">
-                          Waktu tempuh
-                        </td>
-                        <td className="px-3 py-2 text-md text-slate-500">:</td>
-                        <td className="px-3 py-2 text-md text-slate-500">
-                          <p>
-                            {
-                              nomineeDirections[firstNominee.id]?.duration.text ||
-                              "Loading..."
-                            }
-                          </p>
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
                 <Link href={`/places/${firstNominee.id}`}>
-                  <p className="text-[#0E8388] text-center bg-[#CBE4DE] p-3 rounded-lg">
+                  <p className="text-white text-center bg-slate-600 p-3 rounded-lg">
                     Lihat Selengkapnya
                   </p>
                 </Link>
@@ -188,96 +107,66 @@ function Results() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[firstNominee, ...otherNominees].map((n, index) => {
-            const nomineeDirection = nomineeDirections[n.id];
-            const nomineeDistance = nomineeDirection
-              ? nomineeDirection.distance.text
-              : "Loading...";
-            const nomineeDuration = nomineeDirection
-              ? nomineeDirection.duration.text
-              : "Loading...";
-
-            return (
-              <div
-                key={index}
-                className="bg-white overflow-hidden relative sm:rounded-lg mb-4"
-              >
-                <div className="h-64 w-full relative">
-                  <Image
-                    src={n.image}
-                    alt={n.destination_name}
-                    className="rounded-3xl object-cover"
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
-
-                <div className="bg-white border-2 rounded-3xl p-6 -translate-y-12">
-                  <div className="flex justify-between mb-6">
-                    <h2 className="font-bold text-xl text-slate-700">
-                      {n.destination_name}
-                    </h2>
-                    <div>
-                      <p>{n.rating} ⭐️ (review)</p>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-md text-slate-500 mb-6">
-                      {n.description}
-                    </p>
-                  </div>
-
-                  <div className="border-2 rounded-lg text-sm">
-                    <table>
-                      <tbody className="divide-y divide-gray-200">
-                        <tr>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            Harga Masuk
-                          </td>
-                          <td className="px-3 py-2 text-md text-slate-500">:</td>
-                          <td className="px-1 py-2 text-md text-slate-500">
-                            <p>Rp. {n.harga_tiket}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            Jumlah pengunjung harian
-                          </td>
-                          <td className="px-3 py-2 text-md text-slate-500">:</td>
-                          <td className="px-1 py-2 text-md text-slate-500">
-                            <p>{n.jumlah_pengunjung}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            Jarak
-                          </td>
-                          <td className="px-3 py-2 text-md text-slate-500">:</td>
-                          <td className="px-1 py-2 text-md text-slate-500">
-                            <p>{nomineeDistance}</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="px-3 py-2 text-md text-slate-500">
-                            Waktu tempuh
-                          </td>
-                          <td className="px-3 py-2 text-md text-slate-500">:</td>
-                          <td className="px-1 py-2 text-md text-slate-500">
-                            <p>{nomineeDuration}</p>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <Link href={`/places/${n.id}`}>
-                    <p className="text-[#0E8388] text-center bg-[#CBE4DE] p-3 rounded-lg mt-4">
-                      Lihat Selengkapnya
-                    </p>
-                  </Link>
-                </div>
+          {[firstNominee, ...otherNominees].map((n, index) => (
+            <div
+              key={index}
+              className="bg-white overflow-hidden relative sm:rounded-lg mb-4"
+            >
+              <div className="h-64 w-full relative">
+                <Image
+                  src={n.image}
+                  alt={n.destination_name}
+                  className="rounded-3xl object-cover"
+                  layout="fill"
+                  objectFit="cover"
+                />
               </div>
-            );
-          })}
+
+              <div className="bg-white border-2 rounded-3xl p-6 -translate-y-12">
+                <div className="flex justify-between mb-6">
+                  <h2 className="font-bold text-xl text-slate-700">
+                    {n.destination_name}
+                  </h2>
+                  <div>
+                    <p>{n.rating} ⭐️ (review)</p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-md text-slate-500 mb-6">{n.description}</p>
+                </div>
+
+                <div className="border-2 rounded-lg text-sm">
+                  <table>
+                    <tbody className="divide-y divide-gray-200">
+                      <tr>
+                        <td className="px-3 py-2 text-md text-slate-500">
+                          Harga Masuk
+                        </td>
+                        <td className="px-3 py-2 text-md text-slate-500">:</td>
+                        <td className="px-1 py-2 text-md text-slate-500">
+                          <p>Rp. {n.harga_tiket}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-3 py-2 text-md text-slate-500">
+                          Jumlah pengunjung harian
+                        </td>
+                        <td className="px-3 py-2 text-md text-slate-500">:</td>
+                        <td className="px-1 py-2 text-md text-slate-500">
+                          <p>{n.jumlah_pengunjung}</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <Link href={`/places/${n.id}`}>
+                  <p className="text-white text-center bg-slate-600 p-3 rounded-lg mt-4">
+                    Lihat Selengkapnya
+                  </p>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </Layout>

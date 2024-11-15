@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Layout from "@/components/Layout";
 import { FaRegStar } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
@@ -78,7 +77,7 @@ export async function getServerSideProps(context) {
 
   try {
     const response = await fetch(
-      `http://localhost:3001/api/destination/${query}`
+      `http://localhost:3001/api/destination/${query}`,
     );
     const result = await response.json();
     data = result.data; // Sesuaikan dengan struktur respons dari API Anda
