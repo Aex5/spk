@@ -24,9 +24,9 @@ export default function Category() {
       className={`${ubuntu.className} font-medium text-lg tracking-wide text-slate-500 mb-10`}
     >
       <div className="scroba flex gap-5 overflow-x-scroll px-4">
-        {data.category.map((d) => {
+        {data.category.map((d, i) => {
           return (
-            <div className="p-2">
+            <div key={i} className="p-2">
               <a href="#">{d}</a>
             </div>
           );

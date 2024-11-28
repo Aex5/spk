@@ -48,7 +48,7 @@ function Results() {
                   {firstNominee.destination_name}
                 </h1>
                 <div>
-                  <p>{firstNominee.rating} ⭐️ (review)</p>
+                  <p>{firstNominee.rating} ⭐️</p>
                 </div>
               </div>
               <div>
@@ -128,7 +128,7 @@ function Results() {
                     {n.destination_name}
                   </h2>
                   <div>
-                    <p>{n.rating} ⭐️ (review)</p>
+                    <p>{n.rating} ⭐️</p>
                   </div>
                 </div>
                 <div>
@@ -156,6 +156,16 @@ function Results() {
                           <p>{n.jumlah_pengunjung}</p>
                         </td>
                       </tr>
+                      <tr>
+                        <td className="px-3 py-2 text-md text-slate-500">
+                          Score perbandingan
+                        </td>
+                        <td className="px-3 py-2 text-md text-slate-500">:</td>
+                        <td className="px-1 py-2 text-md text-slate-500">
+                          <p>{n.score}</p>
+                        </td>
+                      </tr>
+
                     </tbody>
                   </table>
                 </div>

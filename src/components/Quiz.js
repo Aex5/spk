@@ -39,25 +39,25 @@ export default function Quiz() {
 
   useEffect(() => {
     // Pastikan kode hanya berjalan di klien
+    const fetchUserLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async ({ coords: { latitude, longitude } }) => {
+            const longLat = `${latitude},${longitude}`;
+            const placeName = await getPlaceName(latitude, longitude);
+            setUserLocation({ longLat, placeName });
+          },
+          (error) => console.error("Error obtaining geolocation: ", error),
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    };
+
     if (typeof window !== "undefined") {
       fetchUserLocation();
     }
-  }, []);
-
-  const fetchUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async ({ coords: { latitude, longitude } }) => {
-          const longLat = `${latitude},${longitude}`;
-          const placeName = await getPlaceName(latitude, longitude);
-          setUserLocation({ longLat, placeName });
-        },
-        (error) => console.error("Error obtaining geolocation: ", error),
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  };
+  }, []); // No need to include fetchUserLocation as a dependency anymore
 
   const getPlaceName = async (lat, lng) => {
     try {
@@ -206,4 +206,3 @@ const QuestionCard = ({
     </div>
   </div>
 );
-

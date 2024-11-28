@@ -11,3 +11,39 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.leaflet-routing-container {
+  background-color: white !important;
+  border-radius: 100px;
+  padding: 10px;
+}
+
+#__next
+  > main:nth-child(3)
+  > div
+  > div.mb-10.h-96
+  > div
+  > div.leaflet-control-container
+  > div.leaflet-top.leaflet-right
+  > div
+  > div
+  > div
+  > table {
+  display: none;
+}
+
+#__next
+  > main:nth-child(3)
+  > div
+  > div.mb-10.h-96
+  > div
+  > div.leaflet-control-container
+  > div.leaflet-top.leaflet-right
+  > div
+  > div
+  > div
+  > h2 {
+  font-size: 13px;
+  font-weight: bold;
+}
+

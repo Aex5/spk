@@ -78,10 +78,18 @@ export default function Page({ result }) {
                       {e.destination_name}
                     </span>
                   </div>
-                  <br/>
+                  <p className="text-xs text-slate-400">
+                    {new Date(e.event_date).toLocaleDateString("id-ID", {
+                      weekday: "short",
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <br />
                   <button
                     onClick={() => handleEventClick(e.event_name, e.event_id)}
-                    className="bg-slate-600 text-sm text-slate-100 p-2 mt-5 rounded-md"
+                    className="bg-slate-600 text-sm text-slate-100 p-2 rounded-md"
                   >
                     Daftar Event
                   </button>

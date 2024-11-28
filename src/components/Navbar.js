@@ -46,13 +46,13 @@ export default function Navbar() {
       <div className="md:max-w-[1100px] mx-auto flex justify-between text-slate-500 font-medium">
         <p>KudusSeru</p>
         <ul className="flex justify-center items-center gap-5">
-          <li>
+          <li className="hover:text-emerald-600">
             <Link href="/">Beranda</Link>
           </li>
-          <li>
+          <li className="hover:text-emerald-600">
             <Link href="/places">Destinasi</Link>
           </li>
-          <li>
+          <li className="hover:text-emerald-600">
             <Link href="/events">Events</Link>
           </li>
         </ul>

@@ -22,8 +22,8 @@ const Footer = () => {
     <div className="w-full mt-24 bg-gray-200 text-gray-300 pl-64 py-y px-2">
       <div className="flex justify-center gap-10 border-gray-600 py-8">
           {sections.map((item, i) => (
-            <ul>
-              <li key={i} className="py-1 text-gray-500 hover:text-white">
+            <ul key={i}>
+              <li className="py-1 text-gray-500 hover:text-white">
                 {item}
               </li>
             </ul>

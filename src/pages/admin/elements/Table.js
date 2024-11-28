@@ -1,6 +1,7 @@
 // components/Stat.js
 import useSWR from "swr";
 import axios from "axios";
+import Image from "next/image";
 
 const Table = () => {
   const fetcher = (url) => axios.get(url).then((res) => res.data);
@@ -54,12 +55,6 @@ const Table = () => {
                     scope="col"
                     className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
-                    Preview
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
                     Kategori
                   </th>
                 </tr>
@@ -99,13 +94,6 @@ const Table = () => {
                     </td>
                     <td className="text-sm text-gray-900 font-light px-2 py-2 whitespace-nowrap">
                       {d.rating}
-                    </td>
-                    <td className="text-sm text-gray-900 font-light px-2 py-2 whitespace-nowrap">
-                      <img
-                        src={d.image}
-                        alt={d.destinaiton_name}
-                        className="h-8 w-8"
-                      />
                     </td>
                     <td className="text-sm text-gray-900 font-light px-2 py-2 whitespace-nowrap">
                       {d.kategori}

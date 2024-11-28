@@ -92,7 +92,7 @@ function FormLogin() {
           </div>
           <div>
             <p className="text-sm mt-10">
-              Don't have an account{" "}
+              Tidak punya akun ?
               <a
                 href="javascript:void(0);"
                 className="text-blue-600 font-semibold hover:underline ml-1"
