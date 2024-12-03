@@ -128,16 +128,27 @@ export default function PlaceDetail() {
   useEffect(() => {
     const user = sessionStorage.getItem("user");
     if (user) {
-      setUser(JSON.parse(user));
-    }
+      try {
+        const parsedUser = JSON.parse(user);
 
-    if (id) {
-      const parsedUser = JSON.parse(user);
-      setData((prevData) => ({
-        ...prevData,
-        destination_id: id,
-        user_id: parsedUser.userId,
-      }));
+        if (parsedUser && typeof parsedUser.userId !== "undefined") {
+          setUser(parsedUser);
+
+          if (id) {
+            setData((prevData) => ({
+              ...prevData,
+              destination_id: id,
+              user_id: parsedUser.userId,
+            }));
+          }
+        } else {
+          console.error("Parsed user does not have a userId.");
+        }
+      } catch (error) {
+        console.error("Failed to parse user data:", error);
+      }
+    } else {
+      console.warn("No user data found in sessionStorage.");
     }
   }, [id]);
 
@@ -271,17 +282,17 @@ export default function PlaceDetail() {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500">No comments yet.</p>
+            <p className="text-center text-gray-500">Belum ada Komentar.</p>
           )}
         </div>
 
-        {user && (
+        {user ? (
           <form onSubmit={submitHandler}>
             <textarea
               name="comment"
               value={data.comment}
               onChange={formHandler}
-              placeholder="Write your comment..."
+              placeholder="Masukan komentar..."
               className="w-full p-4 border rounded-lg"
               required
             />
@@ -289,9 +300,21 @@ export default function PlaceDetail() {
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2"
             >
-              Submit
+              Kirim
             </button>
           </form>
+        ) : (
+          <div className="text-center mt-4">
+            <p className="text-gray-600 mb-2">
+              Silakan login untuk memberikan komentar.
+            </p>
+            <button
+              onClick={() => (window.location.href = "/login")}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            >
+              Login
+            </button>
+          </div>
         )}
       </div>
     </Layout>
