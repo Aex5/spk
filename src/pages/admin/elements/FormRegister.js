@@ -20,7 +20,7 @@ function FormRegister() {
             setRegisterError(null); // Clear error if email has changed
           }
       
-        const RegisterReq = await fetch("http://localhost:3001/api/register" ,{
+        const RegisterReq = await fetch(`${process.env.NEXT_PUBLIC_SPK_API}api/register` ,{
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(data),

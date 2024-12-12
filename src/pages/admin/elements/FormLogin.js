@@ -13,7 +13,7 @@ function FormLogin() {
   async function submitHandler(e) {
     e.preventDefault();
 
-    const loginReq = await fetch("http://localhost:3001/api/login", {
+    const loginReq = await fetch(`${process.env.NEXT_PUBLIC_SPK_API}api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

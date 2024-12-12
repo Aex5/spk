@@ -11,7 +11,7 @@ export default function UserEvent() {
   useEffect(() => {
     if (user_id) {
       axios
-        .get(`http://localhost:3001/api/booking/user/${user_id}`)
+        .get(`${process.env.NEXT_PUBLIC_SPK_API}api/booking/user/${user_id}`)
         .then((response) => {
           setUserBooking(response.data.data);
         })

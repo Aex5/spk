@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function User() {
   const fetcher = (url) => axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR("http://localhost:3001/api/users", fetcher);
+  const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_SPK_API}api/users`, fetcher);
 
   if (error) return <p>Error: {error.message}</p>;
   if (!data) return <p>Loading...</p>;

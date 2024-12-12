@@ -76,7 +76,7 @@ function Search() {
       rating: ratingValue,
     };
 
-    const predictReq = await fetch("http://localhost:3001/api/predict2", {
+    const predictReq = await fetch(`${process.env.NEXT_PUBLIC_SPK_API}api/predict2`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestData),

@@ -24,7 +24,7 @@ function EventBooking() {
     e.preventDefault();
 
     const RegisterReq = await fetch(
-      "http://localhost:3001/api/booking/register",
+      `${process.env.NEXT_PUBLIC_SPK_API}api/booking/register`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

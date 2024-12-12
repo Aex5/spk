@@ -21,7 +21,7 @@ function Event({ events, destinations }) {
   async function submitHandler(e) {
     e.preventDefault();
 
-    const createEvent = await fetch("http://localhost:3001/api/event/create", {
+    const createEvent = await fetch(`${process.env.NEXT_PUBLIC_SPK_API}api/event/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -60,7 +60,7 @@ function Event({ events, destinations }) {
     console.log(event_id);
     if (event_id) {
       const deleteReq = await fetch(
-        `http://localhost:3001/api/event/delete/${event_id}`,
+        `${process.env.NEXT_PUBLIC_SPK_API}api/event/delete/${event_id}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -200,12 +200,12 @@ function Event({ events, destinations }) {
 export async function getServerSideProps() {
   try {
     // Fetch events data
-    const eventsRes = await axios.get("http://localhost:3001/api/events");
+    const eventsRes = await axios.get(`${process.env.NEXT_PUBLIC_SPK_API}api/events`);
     const events = eventsRes.data;
 
     // Fetch destinations data
     const destinationsRes = await fetch(
-      "http://localhost:3001/api/destinations",
+      `${process.env.NEXT_PUBLIC_SPK_API}api/destinations`,
     );
     if (!destinationsRes.ok) {
       throw new Error("Failed to fetch");

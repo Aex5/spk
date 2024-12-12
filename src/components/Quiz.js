@@ -97,7 +97,7 @@ export default function Quiz() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:3001/api/predict",
+        `${process.env.NEXT_PUBLIC_SPK_API}api/predict`,
         requestData,
       );
       localStorage.setItem("previousResponse", JSON.stringify(data));

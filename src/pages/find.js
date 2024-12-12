@@ -77,7 +77,7 @@ export async function getServerSideProps(context) {
 
   try {
     const response = await fetch(
-      `http://localhost:3001/api/destination/${query}`,
+      `${process.env.NEXT_PUBLIC_SPK_API}api/destination/${query}`,
     );
     const result = await response.json();
     data = result.data; // Sesuaikan dengan struktur respons dari API Anda

@@ -1,7 +1,6 @@
 import Layout from "../elements/Layout";
 
 function DetailEventBooking({ bookings, error }) {
-  // Jika ada error, tampilkan pesan error
   if (error) {
     return (
       <div className="pl=64">
@@ -95,18 +94,15 @@ function DetailEventBooking({ bookings, error }) {
   );
 }
 
-// Menggunakan getServerSideProps untuk mengambil data di server side
 export async function getServerSideProps(context) {
   const { id } = context.query;
 
   try {
-    // Mengambil data dari API menggunakan fetch
     const response = await fetch(
-      `http://localhost:3001/api/booking/event/${id}`,
+      `${process.env.NEXT_PUBLIC_SPK_API}api/booking/event/${id}`,
     );
     const data = await response.json();
 
-    // Jika ada error dari API
     if (!response.ok) {
       return {
         props: {
@@ -115,7 +111,6 @@ export async function getServerSideProps(context) {
       };
     }
 
-    // Mengembalikan data bookings ke komponen sebagai props
     return {
       props: {
         bookings: data.data || [],

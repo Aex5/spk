@@ -16,14 +16,13 @@ export default function Card() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/destination/top",
+          `${process.env.NEXT_PUBLIC_SPK_API}api/destination/top`,
         );
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-
     fetchData();
   }, []);
 

@@ -27,7 +27,7 @@ export default function UpdateUser() {
     e.preventDefault();
 
     const UpdateReq = await fetch(
-      `http://localhost:3001/api/user/update/${user.userId}`,
+      `${process.env.NEXT_PUBLIC_SPK_API}api/user/update/${user.userId}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

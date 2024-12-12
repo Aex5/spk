@@ -5,7 +5,7 @@ import { FaLocationDot } from "react-icons/fa6";
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch("http://localhost:3001/api/events");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SPK_API}api/events`);
     if (!res.ok) {
       throw new Error("Failed to fetch");
     }

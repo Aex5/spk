@@ -15,7 +15,7 @@ export default function Profile() {
       setUser(parsedUser);
 
       axios
-        .get(`http://localhost:3001/api/user/${parsedUser.userId}/comments`)
+        .get(`${process.env.NEXT_PUBLIC_SPK_API}api/user/${parsedUser.userId}/comments`)
         .then((response) => {
           setUserComments(response.data.data);
         })

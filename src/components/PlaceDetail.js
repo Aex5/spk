@@ -15,7 +15,6 @@ import "leaflet-routing-machine";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-// Dynamic imports for components
 const DynamicMapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
   { ssr: false },
@@ -33,7 +32,6 @@ const DynamicPopup = dynamic(
   { ssr: false },
 );
 
-// Helper function to create custom icons
 const createCustomIcon = (IconComponent) => {
   if (typeof window !== "undefined") {
     return L.divIcon({
@@ -154,15 +152,16 @@ export default function PlaceDetail() {
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:3001/api/destination/detail/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_SPK_API}api/destination/detail/${id}`)
         .then((response) => response.json())
         .then((data) => setPlace(data));
     }
   }, [id]);
 
-  // Fetch comments using SWR
   const { data: comments, mutate } = useSWR(
-    id ? `http://localhost:3001/api/destination/${id}/comments` : null,
+    id
+      ? `${process.env.NEXT_PUBLIC_SPK_API}api/destination/${id}/comments`
+      : null,
     fetcher,
   );
 
@@ -191,7 +190,7 @@ export default function PlaceDetail() {
 
     try {
       const res = await fetch(
-        `http://localhost:3001/api/destination/${id}/comment`,
+        `${process.env.NEXT_PUBLIC_SPK_API}api/destination/${id}/comment`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -308,12 +307,11 @@ export default function PlaceDetail() {
             <p className="text-gray-600 mb-2">
               Silakan login untuk memberikan komentar.
             </p>
-            <button
-              onClick={() => (window.location.href = "/login")}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-            >
-              Login
-            </button>
+            <Link href="/auth/login" passHref>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+                Login
+              </button>
+            </Link>
           </div>
         )}
       </div>

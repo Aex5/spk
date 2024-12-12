@@ -6,7 +6,7 @@ import Image from "next/image";
 const Table = () => {
   const fetcher = (url) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(
-    "http://localhost:3001/api/destinations",
+    `${process.env.NEXT_PUBLIC_SPK_API}api/destinations`,
     fetcher,
   );
 

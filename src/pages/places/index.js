@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch("http://localhost:3001/api/destinations");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SPK_API}api/destinations`);
     if (!res.ok) {
       throw new Error("Failed to fetch");
     }
