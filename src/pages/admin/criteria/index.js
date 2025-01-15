@@ -1,5 +1,12 @@
 import Layout from "../elements/Layout";
 
+const criteriaData = [
+  { no: 1, name: "Jarak", weight: 0.4, atribut: "Cost" },
+  { no: 2, name: "Rating", weight: 0.3, atribut: "Benefit"  },
+  { no: 3, name: "Harga Tiket", weight: 0.2, atribut: "Cost"  },
+  { no: 4, name: "Jumlah Pengunjung", weight: 0.1, atribut: "Benefit"  },
+];
+
 export default function Criteria() {
   return (
     <Layout>
@@ -29,53 +36,34 @@ export default function Criteria() {
                 >
                   Bobot
                 </th>
+                <th
+                  scope="col"
+                  className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                >
+                  Atribut
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b">
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  1
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Kriteria A
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  0.30
-                </td>
-              </tr>
-              <tr className="bg-gray-50 border-b">
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  2
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Kriteria B
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  0.50
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  3
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Kriteria C
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  0.20
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  3
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Kriteria C
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  0.20
-                </td>
-              </tr>
+              {criteriaData.map((item, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
+                >
+                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    {item.no}
+                  </td>
+                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    {item.name}
+                  </td>
+                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    {item.weight}
+                  </td>
+                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    {item.atribut}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

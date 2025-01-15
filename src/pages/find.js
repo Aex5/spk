@@ -53,9 +53,9 @@ export default function SearchResults({ data }) {
                     <h1 className="text-base font-bold text-slate-700">
                       Rp.{dest.harga_tiket}
                     </h1>
-                    <p className="text-xs text-slate-500">
-                      Sudah termasuk fasilitas
-                    </p>
+                    {/* <p className="text-xs text-slate-500"> */}
+                    {/*   Sudah termasuk fasilitas */}
+                    {/* </p> */}
                   </div>
 
                   <button className="bg-slate-600 text-slate-100 py-3 px-4">

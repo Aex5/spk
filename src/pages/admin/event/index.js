@@ -147,7 +147,7 @@ function Event({ events, destinations }) {
               </div>
 
               <div>
-                <button className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                <button className="hover:shadow-form w-full rounded-md bg-slate-800 py-3 px-8 text-center text-base font-semibold text-white outline-none">
                   Tambah Event
                 </button>
               </div>
@@ -184,7 +184,7 @@ function Event({ events, destinations }) {
                 </p>
                 <button
                   onClick={() => deleteOnClick(e.event_id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded mt-10"
+                  className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded mt-10"
                 >
                   <MdDelete />
                 </button>

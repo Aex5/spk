@@ -97,7 +97,7 @@ export default function Card() {
                     Rp.{dest.harga_tiket}
                   </h1>
                   <p className="text-xs text-slate-500">
-                    Sudah termasuk fasilitas
+                    Tiket Masuk
                   </p>
                 </div>
 

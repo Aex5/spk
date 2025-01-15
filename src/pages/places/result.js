@@ -103,7 +103,7 @@ function Results() {
 
         {/* List of Nominee Destinations */}
         <h2 className="text-center font-bold text-3xl text-slate-700 mb-8">
-          Data Komparisasi
+          Hasil Komparisasi
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -156,15 +156,15 @@ function Results() {
                           <p>{n.jumlah_pengunjung}</p>
                         </td>
                       </tr>
-                      <tr>
-                        <td className="px-3 py-2 text-md text-slate-500">
-                          Score perbandingan
-                        </td>
-                        <td className="px-3 py-2 text-md text-slate-500">:</td>
-                        <td className="px-1 py-2 text-md text-slate-500">
-                          <p>{n.score}</p>
-                        </td>
-                      </tr>
+                      {/* <tr> */}
+                      {/*   <td className="px-3 py-2 text-md text-slate-500"> */}
+                      {/*     Score perbandingan */}
+                      {/*   </td> */}
+                      {/*   <td className="px-3 py-2 text-md text-slate-500">:</td> */}
+                      {/*   <td className="px-1 py-2 text-md text-slate-500"> */}
+                      {/*     <p>{n.score}</p> */}
+                      {/*   </td> */}
+                      {/* </tr> */}
 
                     </tbody>
                   </table>
